@@ -104,10 +104,10 @@ app.layout = html.Div([
 
 @app.callback(
     Output('total-visit', 'children'),
-    Output('twitch-visit', 'children'),
     Output('facebook-visit', 'children'),
     Output('instagram-visit', 'children'),
     Output('twitter-visit', 'children'),
+    Output('twitch-visit', 'children'),
     Output('total-visit-line', 'figure'),
     Output('total-visit-social-networks-line', 'figure'),
     Output('world-map', 'figure'),
@@ -144,14 +144,7 @@ def update_figures(start_date_selected, end_date_selected, social_networks_selec
              (df.datetime <= end_date_selected)]
     ).shape[0]
 
-    twitch_visit = (
-        df
-        .loc[(df.social_network == 'twitch') &
-             (df.social_network.isin(social_networks_selected)) &
-             (df.device.isin(devices_selected)) &
-             (df.datetime >= start_date_selected) &
-             (df.datetime <= end_date_selected)]
-    ).shape[0]
+    
     
     twitter_visit = (
         df
@@ -162,6 +155,15 @@ def update_figures(start_date_selected, end_date_selected, social_networks_selec
              (df.datetime <= end_date_selected)]
     ).shape[0]
 
+    twitch_visit = (
+        df
+        .loc[(df.social_network == 'twitch') &
+             (df.social_network.isin(social_networks_selected)) &
+             (df.device.isin(devices_selected)) &
+             (df.datetime >= start_date_selected) &
+             (df.datetime <= end_date_selected)]
+    ).shape[0]
+    
     df_by_month = (
         df
         .loc[(df.social_network.isin(social_networks_selected)) &
